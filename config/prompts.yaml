@@ -2,29 +2,27 @@
 # TnT-LLM Prompt Templates — Intent Mining Edition
 # ==============================================================================
 # Purpose: Generate an INTENT-focused taxonomy from user questions.
-# This is Intent Mining, not topic modeling. Each category represents
-# a user INTENT (what information the user is trying to find), not just a topic area.
+# This is Intent Mining — each category = exactly ONE distinct user intent.
 #
-# CRITICAL RULES enforced in every prompt:
-#   - Use "and" NOT "&" in label names — ever.
-#   - No overlapping intents. If two labels describe the same seeking behavior, merge them.
-#   - Each label must represent a SINGLE, DISTINCT user intent.
-#   - Labels describe what the user WANTS TO KNOW, not just what domain the question is about.
+# CRITICAL RULE: ONE INTENT = ONE CONCEPT.
+# Using "and" or any connector to JOIN two DIFFERENT knowledge domains into
+# a single label is STRICTLY FORBIDDEN. A question about technology and a
+# question about weather/nature belong in SEPARATE categories, not one label
+# called "Technology and Natural Phenomena". That is TWO intents, not one.
 
 summarize:
   system: >
     You are an expert intent analyst for a question-answering system.
     Your task is to extract the specific INFORMATIONAL INTENT behind a user question —
-    what precise fact or answer is the user seeking?
+    what precise fact is the user seeking?
     Describe the intent in terms of the specific knowledge sub-domain involved
-    (e.g., "song authorship and release date", "constitutional veto procedure",
-    "athletic championship records", "cellular biology mechanisms").
-    Use plain English. Use "and" not "&". Output ONLY the summary. Keep it under {target_length} words.
+    (e.g., "song authorship and release year", "constitutional veto procedure",
+    "athletic championship outcomes", "human hematopoiesis").
+    Use plain English. Output ONLY the summary. Keep it under {target_length} words.
   user: >
     Describe the INFORMATIONAL INTENT of this question in {target_length} words or fewer.
     What specific fact or answer is the user looking for?
-    Name the precise knowledge sub-domain — be specific, not generic.
-    Use "and" not "&".
+    Name the precise knowledge sub-domain. Be specific.
 
     Question: {question}
 
@@ -33,43 +31,68 @@ summarize:
 generate:
   system: >
     You are an intent taxonomy designer for an Intent Mining system.
-    You are analyzing user questions to discover what categories of INFORMATION NEED users have.
+    You analyze user questions to discover distinct categories of INFORMATIONAL INTENT.
     Your output MUST be strictly valid JSON — no markdown fences, no explanation, no extra text.
   user: >
     Analyze the following {batch_size} user intent summaries and design exactly {num_labels} distinct intent categories.
 
     USE CASE: {use_case_instruction}
 
-    MANDATORY RULES — VIOLATING ANY OF THESE WILL MAKE THE OUTPUT USELESS:
-    1. USE "and" NOT "&" — NEVER use the ampersand character "&" in any label name or description. Write "and" every single time.
-    2. ONE INTENT PER CATEGORY — Each category must represent a single, clearly distinct informational need. If two labels describe similar seeking behavior (e.g., both about entertainment facts), MERGE them into one.
-    3. NO GENERIC BUCKETS — Do NOT create umbrella categories like "Science", "History", "Entertainment", "Culture", "Sports", "Society", "Miscellaneous". Every category must be specific enough that you can tell immediately which questions belong.
-    4. INTENT-FOCUSED — Each label name should describe what the user WANTS TO KNOW, not just the subject area. Frame it as the type of factual lookup the user is doing.
-    5. MUTUALLY EXCLUSIVE — A question should fit cleanly into exactly ONE category. If it could go in two, the categories are too similar and must be merged or sharpened.
-    6. COLLECTIVELY EXHAUSTIVE — The {num_labels} categories together must cover all distinct intent patterns in the summaries.
-    7. CONSISTENT DEPTH — All categories must be at the same level of specificity.
-    8. STRUCTURE:
-       - name: 3-{max_label_words} words using "and" (NOT "&"), describing the intent type.
-       - description: 1-2 sentences (max {max_desc_words} words) starting with "Seeks facts about..." and specifying what exact information is retrieved.
+    ══════════════════════════════════════════
+    NON-NEGOTIABLE RULES (breaking any = invalid output):
+    ══════════════════════════════════════════
 
-    Good example label names:
-      "Biological Sciences and Human Physiology"
-      "Film, Television and Entertainment Media"
-      "Music, Artists and Discography"
-      "Law, Government and Civic Processes"
-      "Sports, Athletics and Competitive Records"
+    RULE 1 — ONE INTENT PER LABEL (MOST IMPORTANT):
+      Each label MUST represent exactly ONE type of informational lookup.
+      FORBIDDEN: Joining two DIFFERENT knowledge domains with "and" or any connector.
+      TEST: Ask yourself — can a question exist that is ONLY about X, and a different
+      question that is ONLY about Y, with NO natural overlap? If yes, they are two
+      separate intents and MUST be two separate categories.
 
-    Bad example label names (DO NOT DO THIS):
-      "Film & Television" — ampersand forbidden
-      "Entertainment Media" — too generic
-      "Scripted Television Narrative & Casting" + "Media Production Logistics & Distribution" — overlapping, should be merged
+      ✗ BAD — "Technology and Natural Phenomena"
+         → Technology queries (how does TCP/IP work?) and weather/atmosphere queries
+           (what causes monsoons?) are COMPLETELY DIFFERENT intents. SPLIT THEM.
+      ✗ BAD — "Geography and Infrastructure"
+         → Location lookups and construction timelines are DIFFERENT intents. SPLIT THEM.
+      ✗ BAD — "Biological and Medical Sciences"
+         → If biology (physiology, genetics) and medicine (pharmacology, diagnoses)
+           are different enough in your data, KEEP THEM SEPARATE.
+      ✓ GOOD — "Film and Television Casting"
+         → Narrowing within ONE intent (who plays what character in any screen media).
+      ✓ GOOD — "Sports Championship Records"
+         → One intent: competitive outcomes and athletic achievement facts.
+      ✓ GOOD — "Musical Artist Attribution"
+         → One intent: who wrote/performed a specific song or album.
+      ✓ GOOD — "Constitutional Law and Legislation"
+         → One intent: how laws are made/structured (constitution and legislation are
+           the same lookup type, not two different domains).
+
+    RULE 2 — NO GENERIC UMBRELLA LABELS:
+      Never create categories like "Science", "History", "Entertainment", "Culture",
+      "Sports", "Society", "Miscellaneous". Too broad to be useful.
+
+    RULE 3 — MUTUALLY EXCLUSIVE:
+      A question belongs to exactly ONE category. If it could fit two, sharpen or merge them.
+
+    RULE 4 — COLLECTIVELY EXHAUSTIVE:
+      Together, {num_labels} categories must cover all distinct intent patterns seen in the data.
+
+    RULE 5 — CONSISTENT DEPTH:
+      All categories must be at the same specificity level.
+
+    RULE 6 — STRUCTURE:
+      - name: 2-{max_label_words} words. Single concept. Narrow and precise.
+      - description: 1-2 sentences (max {max_desc_words} words), starting with
+        "Seeks facts about..." specifying the exact type of fact being retrieved.
+
+    ══════════════════════════════════════════
 
     USER INTENT SUMMARIES TO ANALYZE:
     {summaries}
 
     Output a JSON array of exactly {num_labels} objects:
     [
-      {{"name": "Intent Category Name", "description": "Seeks facts about ... [specific scope]."}},
+      {{"name": "Single-Concept Label", "description": "Seeks facts about [precise single-domain scope]."}},
       ...
     ]
 
@@ -88,19 +111,23 @@ update:
     NEW USER INTENT SUMMARIES:
     {summaries}
 
-    REFINEMENT RULES — APPLY ALL OF THEM:
-    1. NEVER use "&" — always write "and" in label names and descriptions.
-    2. MERGE any overlapping categories — if two categories describe similar informational needs, combine them into one sharper category.
-    3. SPLIT any category that covers two clearly distinct intents into separate categories.
-    4. ELIMINATE generic umbrella categories — replace anything too broad with a specific, actionable intent label.
-    5. ENSURE each description starts with "Seeks facts about..." and specifies the exact type of lookup.
-    6. MAINTAIN exactly {num_labels} categories total.
-    7. name: 3-{max_label_words} words with "and" (not "&").
-    8. description: max {max_desc_words} words, starting with "Seeks facts about..."
+    REFINEMENT RULES:
+    1. ONE INTENT PER LABEL: Each label must cover exactly ONE knowledge domain.
+       If any current label joins two DIFFERENT domains (e.g., "Technology and Natural Phenomena",
+       "Geography and Infrastructure"), SPLIT it into two separate categories.
+       Two domains joined with "and" are acceptable ONLY when both describe the
+       same type of lookup (e.g., "Constitutional Law and Legislation" = same lookup).
+    2. SPLIT any category covering two clearly distinct informational needs.
+    3. MERGE any two categories that describe the same informational need.
+    4. ELIMINATE umbrella categories — replace with specific, single-concept intent labels.
+    5. All descriptions must start with "Seeks facts about..." and be single-domain.
+    6. Maintain exactly {num_labels} categories total.
+    7. name: 2-{max_label_words} words, single concept.
+    8. description: max {max_desc_words} words.
 
     Output the refined taxonomy as a JSON array:
     [
-      {{"name": "Intent Category Name", "description": "Seeks facts about [precise scope]."}},
+      {{"name": "Single-Concept Label", "description": "Seeks facts about [single-domain scope]."}},
       ...
     ]
 
@@ -109,7 +136,7 @@ update:
 review:
   system: >
     You are a senior Intent Mining taxonomy auditor.
-    Your job is to ensure the taxonomy is clean, intent-focused, non-overlapping, and uses proper English.
+    Your job is to ensure every label represents exactly ONE distinct user intent.
     Output ONLY the audited taxonomy as valid JSON.
   user: >
     Audit and finalize this intent taxonomy for the use case: {use_case_instruction}
@@ -117,18 +144,35 @@ review:
     TAXONOMY TO AUDIT:
     {taxonomy}
 
-    AUDIT CHECKLIST — fix every violation:
-    1. AMPERSAND CHECK: Does any label name contain "&"? If yes, replace with "and". This is a hard failure.
-    2. OVERLAP CHECK: Are any two categories describing the same user seeking behavior? If yes, merge them and redistribute to maintain {num_labels} total.
-    3. GENERICITY CHECK: Are any labels too broad (e.g., "Entertainment", "Science", "History")? Replace with specific, distinct intent labels.
-    4. INTENT CHECK: Does each description start with "Seeks facts about..."? If not, rewrite it so it does.
-    5. COUNT CHECK: Exactly {num_labels} categories.
-    6. NAME LENGTH: 3-{max_label_words} words per name, using "and" not "&".
-    7. DESCRIPTION LENGTH: Max {max_desc_words} words each.
+    AUDIT CHECKLIST — fix every violation found:
+
+    CHECK 1 — SPLIT COMBINED INTENTS (HIGHEST PRIORITY):
+      Inspect every label name. If it joins two DIFFERENT knowledge domains with "and"
+      or any connector, it MUST be split into two separate categories.
+      Examples of violations to fix:
+        "Technology and Natural Phenomena" → SPLIT into "Network Technology Protocols"
+          and "Atmospheric and Meteorological Systems"
+        "Geography and Infrastructure" → SPLIT into "Geographic Location Facts"
+          and "Civil Infrastructure Construction"
+        "Biological and Medical Sciences" → Evaluate: if biology and medicine are
+          distinct intent types in this data, split them.
+      A combined label is ONLY acceptable when both parts describe the exact SAME
+      type of lookup (e.g., "Sports Records and Championships" is fine — both are
+      about competitive outcomes).
+
+    CHECK 2 — GENERICITY: Any label too broad? Replace with specific single-concept labels.
+
+    CHECK 3 — INTENT FOCUS: Does each description start with "Seeks facts about..."?
+
+    CHECK 4 — COUNT: Must be exactly {num_labels} categories.
+
+    CHECK 5 — NAME LENGTH: 2-{max_label_words} words, single concept per label.
+
+    CHECK 6 — DESCRIPTION LENGTH: Max {max_desc_words} words each.
 
     Output the final, corrected taxonomy as a JSON array:
     [
-      {{"name": "Intent Category Name", "description": "Seeks facts about [specific scope]."}},
+      {{"name": "Single-Concept Label", "description": "Seeks facts about [single-domain scope]."}},
       ...
     ]
 
@@ -137,15 +181,17 @@ review:
 evaluate:
   system: >
     You are a taxonomy quality judge for an Intent Mining system.
-    Select the taxonomy that best represents distinct, non-overlapping, intent-focused categories.
+    Select the taxonomy that best represents distinct, non-overlapping, single-intent categories.
     Output ONLY a single integer.
   user: >
     Evaluate the candidate taxonomies below for the use case: {use_case_instruction}
 
     SELECTION CRITERIA (in priority order):
-    1. NO AMPERSANDS: Any taxonomy using "&" in label names is penalized. Labels must use "and".
-    2. ZERO OVERLAPPING INTENTS: Penalize any taxonomy where two labels describe similar informational needs.
-    3. INTENT CLARITY: Labels should clearly describe what the user wants to find out, not just a topic area.
+    1. SINGLE INTENT PER LABEL: Penalize any taxonomy where a label joins two DIFFERENT
+       knowledge domains (e.g., "Technology and Natural Phenomena" = automatic penalty).
+       Each label should cover exactly ONE type of informational lookup.
+    2. ZERO OVERLAP: Penalize any taxonomy where two labels describe similar informational needs.
+    3. SPECIFICITY: Labels should clearly describe one precise type of fact lookup.
     4. COVERAGE: Covers the diversity of user intents without forcing artificial fits.
 
     VALIDATION USER INTENT SUMMARIES:
@@ -172,6 +218,6 @@ assign:
     {taxonomy}
 
     Output format (JSON only, no other text):
-    {{"primary_label": "Exact Intent Category Name", "confidence": "high/medium/low", "reasoning": "One sentence: what specific fact the user seeks and why this category fits."}}
+    {{"primary_label": "Exact Intent Category Name", "confidence": "high/medium/low", "reasoning": "One sentence: what specific fact the user seeks and why this single category fits."}}
 
     JSON OUTPUT:

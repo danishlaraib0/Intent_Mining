@@ -79,18 +79,18 @@ phase1:
     num_epochs: 1                    # Epochs over data per trial
     output_dir: "taxonomies"
 
-  # Use-case instruction — Intent Mining focused, NO AMPERSANDS
+  # Use-case instruction — Intent Mining, single-intent-per-label
   use_case:
     name: "intent_mining"
     instruction: >
-      This is an INTENT MINING task. Discover what distinct categories of INFORMATIONAL INTENT users express
-      when asking factual questions. Each category must represent a unique type of informational need —
-      what the user wants to find out — not just a broad subject area.
-      RULES: Use "and" not "&" in every label. Merge any overlapping intents into one.
-      Do NOT create generic umbrella categories like "Science", "History", "Sports", "Entertainment", "Culture".
-      Good examples: "Biological Sciences and Human Physiology", "Film, Television and Entertainment Media",
-      "Music, Artists and Discography", "Law, Government and Civic Processes".
-      Each category must be distinct enough that a question clearly belongs to only one.
+      This is an INTENT MINING task. Each category must represent exactly ONE distinct
+      type of informational lookup that users perform. A category like "Technology and
+      Natural Phenomena" is invalid because it bundles two unrelated intents (tech lookups
+      vs. weather/nature lookups) into one label. A label may only use "and" when both
+      parts describe the SAME type of lookup within the same domain
+      (e.g., "Sports Records and Championships" is valid — both are competitive outcome lookups).
+      Do NOT create generic umbrella categories like "Science", "History", "Entertainment".
+      Every label must be specific enough that you can immediately tell which questions belong.
 
 # --- Phase 2: Label Assignment (No Classifier Training) ---
 phase2:
