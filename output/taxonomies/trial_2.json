@@ -1,42 +1,42 @@
 [
   {
-    "name": "Hematology & Cellular Physiology",
-    "description": "Blood cell formation, muscle contraction mechanisms, and nucleic acid function at the cellular level."
+    "name": "Biological Sciences and Human Physiology",
+    "description": "Seeks facts about blood cell formation, muscle physiology, nucleic acid function, and molecular mechanisms of the human body."
   },
   {
-    "name": "Television Production & Narrative",
-    "description": "Actor casting, character arcs, plot specifics, and release schedules for scripted TV series."
+    "name": "Film, Television and Entertainment Media",
+    "description": "Seeks facts about movies, TV series, actor casting, character arcs, plot specifics, and media release schedules."
   },
   {
-    "name": "Musicology & Release Chronology",
-    "description": "Song composition dates, artist attribution, band histories, and specific track release timelines."
+    "name": "Music, Artists and Discography",
+    "description": "Seeks facts about song composition dates, performing artists, band histories, and specific track or album release details."
   },
   {
-    "name": "Military Campaigns & Combat",
-    "description": "Specific battle dates, combatant identities, tactical operations, and armed conflict outcomes."
+    "name": "Sports, Athletics and Competitive Records",
+    "description": "Seeks facts about athletic achievements, championship results, player awards, and competitive sports outcomes."
   },
   {
-    "name": "Athletic Records & Championships",
-    "description": "Specific athletic achievements, championship results, player awards, and competitive sports statistics."
+    "name": "Law, Government and Civic Processes",
+    "description": "Seeks facts about presidential authority, congressional procedures, legislative jurisdiction, and legal rights."
   },
   {
-    "name": "Constitutional Law & Veto Powers",
-    "description": "Presidential veto authority, congressional override procedures, and legislative jurisdiction scopes."
+    "name": "Literature, Books and Publishing",
+    "description": "Seeks facts about book navigation elements, structural terminology, and publication history of written works."
   },
   {
-    "name": "Book Structure & Publishing",
-    "description": "Physical book navigation elements, structural terminology, and publication history details."
+    "name": "Earth Sciences, Ecology and Geography",
+    "description": "Seeks facts about planetary composition, aquatic food webs, atmospheric dynamics, and environmental processes."
   },
   {
-    "name": "Numismatics & Licensing Administration",
-    "description": "Currency denominations, historical coinage details, and administrative processes for official licenses."
+    "name": "History, Conflicts and Cultural Institutions",
+    "description": "Seeks facts about military campaigns, battle outcomes, historical dates, and major geopolitical events."
   },
   {
-    "name": "Urban Demographics & Elections",
-    "description": "Local election results, urban population statistics, and public venue construction timelines."
+    "name": "Demographics, Populations and Urban Facts",
+    "description": "Seeks facts about city election results, urban population statistics, currency denominations, and licensing administration."
   },
   {
-    "name": "Moral Development & Ecology",
-    "description": "Moral reasoning frameworks, planetary composition, aquatic food webs, and atmospheric dynamics."
+    "name": "Science, Engineering and Technology",
+    "description": "Seeks facts about physics, chemistry, engineering systems, consumer electronics, software, and network infrastructure."
   }
 ]
