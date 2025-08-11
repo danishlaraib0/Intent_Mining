@@ -1,0 +1,42 @@
+[
+  {
+    "name": "Film and Cinema",
+    "description": "Movies, casting, production details, franchises, adaptations, and specific plot or character details from films."
+  },
+  {
+    "name": "Television and Streaming",
+    "description": "TV series, streaming content, casting, production schedules, filming locations, and show-specific plot details."
+  },
+  {
+    "name": "Music and Audio",
+    "description": "Songs, artists, bands, music theory, release dates, songwriting credits, and audio production details."
+  },
+  {
+    "name": "History and Politics",
+    "description": "Historical events, wars, political movements, government structure, legislation, and significant past occurrences."
+  },
+  {
+    "name": "Science and Medicine",
+    "description": "Biology, medicine, physics, chemistry, ecology, psychology, and other natural or applied scientific concepts."
+  },
+  {
+    "name": "Geography and Demographics",
+    "description": "Locations, physical geography, population statistics, urban planning, and fictional settings from media."
+  },
+  {
+    "name": "Sports and Athletics",
+    "description": "Sports rules, player achievements, team histories, rivalries, championships, and specific athletic events."
+  },
+  {
+    "name": "Literature and Books",
+    "description": "Books, publishing details, narrative elements, book series, and literary terminology."
+  },
+  {
+    "name": "Technology and Gaming",
+    "description": "Software, hardware, network protocols, consumer electronics, video games, and technical infrastructure."
+  },
+  {
+    "name": "Society and Culture",
+    "description": "Religion, currency, law, celebrity gossip, general cultural knowledge, and everyday civic processes."
+  }
+]

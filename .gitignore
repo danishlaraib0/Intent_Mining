@@ -1,0 +1,50 @@
+# Secrets and local environment
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+credentials.json
+secrets.json
+.secrets
+**/secrets/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+.eggs/
+dist/
+build/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Virtual environments (local conda/venv named taxonomy/)
+taxonomy/
+.venv/
+venv/
+env/
+ENV/
+
+# Jupyter / IDE
+.ipynb_checkpoints/
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+
+# Logs and runtime
+*.log
+output/logs/
+
+# OS
+Thumbs.db

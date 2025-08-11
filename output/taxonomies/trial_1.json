@@ -1,0 +1,42 @@
+[
+  {
+    "name": "Television & Streaming",
+    "description": "Facts about TV series, streaming platforms, casting, production details, and release schedules."
+  },
+  {
+    "name": "Film & Video Games",
+    "description": "Information on movies, cinema history, video game lore, characters, mechanics, and releases."
+  },
+  {
+    "name": "Music & Pop Culture",
+    "description": "Music history, artist credits, celebrity news, trends, and general entertainment trivia."
+  },
+  {
+    "name": "Sports & Athletics",
+    "description": "Professional and amateur sports, including team histories, player statistics, rules, and match results."
+  },
+  {
+    "name": "History & Military",
+    "description": "Historical events, wars, battles, political movements, and significant figures from past centuries."
+  },
+  {
+    "name": "Law & Government",
+    "description": "Legal statutes, government structures, legislative processes, political administration, and civic services."
+  },
+  {
+    "name": "Natural Sciences",
+    "description": "Biology, chemistry, physics, astronomy, ecology, meteorology, and natural phenomena."
+  },
+  {
+    "name": "Geography & Demographics",
+    "description": "Physical geography, land areas, population statistics, urban data, and locations of regions or countries."
+  },
+  {
+    "name": "Economics & Technology",
+    "description": "Currency, financial systems, economic history, consumer electronics, software, and network protocols."
+  },
+  {
+    "name": "Literature & Health",
+    "description": "Books, publishing, literary analysis, medical terminology, pharmacology, and human health topics."
+  }
+]
