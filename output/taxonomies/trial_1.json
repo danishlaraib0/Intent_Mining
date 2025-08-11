@@ -1,42 +1,42 @@
 [
   {
-    "name": "Biological Sciences and Human Physiology",
-    "description": "Seeks facts about cellular mechanisms, genetics, hematology, molecular biology, and the physiological functioning of the human body."
+    "name": "Screen Media Casting",
+    "description": "Seeks facts about specific actors portraying characters in films, television series, or musical productions."
   },
   {
-    "name": "Film, Television and Entertainment Media",
-    "description": "Seeks facts about movies, scripted TV series, streaming shows, character casting, plot events, and entertainment media releases."
+    "name": "Screen Media Production Details",
+    "description": "Seeks facts about filming locations, release schedules, production timelines, and specific plot details of television or film series."
   },
   {
-    "name": "Music, Artists and Discography",
-    "description": "Seeks facts about songs, composers, performing artists, band histories, album releases, and music production credits."
+    "name": "Music Attribution and Theory",
+    "description": "Seeks facts about original artists, composers, song credits, and specific musical technical attributes like time signatures."
   },
   {
-    "name": "Sports, Athletics and Competitive Records",
-    "description": "Seeks facts about championship outcomes, player achievements, match statistics, team histories, and athletic performance records."
+    "name": "Literary Publication and Structure",
+    "description": "Seeks facts about book publication histories, series timelines, and specific terminology regarding physical book structure."
   },
   {
-    "name": "Law, Government and Civic Processes",
-    "description": "Seeks facts about constitutional law, legislative procedures, executive authority, legal rights, and governmental administration."
+    "name": "Political and Legal Structures",
+    "description": "Seeks facts about government branch functions, legislative processes, specific laws, and political officeholder histories."
   },
   {
-    "name": "Literature, Books and Publishing",
-    "description": "Seeks facts about book series, author credits, publication history, textual structure, and literary terminology."
+    "name": "Institutional History and Milestones",
+    "description": "Seeks facts about construction timelines, inaugural events, or historical origins of major monuments, awards, and public institutions."
   },
   {
-    "name": "Earth Sciences, Ecology and Geography",
-    "description": "Seeks facts about physical geography, ecological systems, atmospheric phenomena, climate patterns, natural landmarks, and land use."
+    "name": "Sports Records and Championships",
+    "description": "Seeks facts about competitive outcomes, championship participants, player awards, and historical sports event results."
   },
   {
-    "name": "History, Conflicts and Cultural Institutions",
-    "description": "Seeks facts about historical events, military campaigns, religious movements, major infrastructure projects, and societal transformations."
+    "name": "Human Physiology and Genetics",
+    "description": "Seeks facts about human biological processes, including blood cell formation, DNA structure, and Mendelian inheritance principles."
   },
   {
-    "name": "Science, Engineering and Technology",
-    "description": "Seeks facts about physics, chemistry, astronomy, consumer electronics, software, network systems, and engineering principles."
+    "name": "Geographic and Environmental Data",
+    "description": "Seeks facts about physical locations, land use statistics, meteorological systems, and ecological nutrient cycling processes."
   },
   {
-    "name": "Demographics, Populations and Urban Facts",
-    "description": "Seeks facts about population statistics, city demographics, migration data, currency systems, and administrative or licensing processes."
+    "name": "Technical and Academic Concepts",
+    "description": "Seeks definitions of academic theories, network protocols, medical terminology, and specific fictional world-building elements."
   }
 ]

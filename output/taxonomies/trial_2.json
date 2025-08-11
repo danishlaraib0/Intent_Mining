@@ -1,42 +1,42 @@
 [
   {
-    "name": "Biological Sciences and Human Physiology",
-    "description": "Seeks facts about blood cell formation, muscle physiology, nucleic acid function, and molecular mechanisms of the human body."
+    "name": "Screen Media Casting",
+    "description": "Seeks facts about specific actors, actresses, or character roles in films, television series, and theatrical productions."
   },
   {
-    "name": "Film, Television and Entertainment Media",
-    "description": "Seeks facts about movies, TV series, actor casting, character arcs, plot specifics, and media release schedules."
+    "name": "Screen Media Production Details",
+    "description": "Seeks facts about filming locations, release schedules, production timelines, and specific plot details of visual media."
   },
   {
-    "name": "Music, Artists and Discography",
-    "description": "Seeks facts about song composition dates, performing artists, band histories, and specific track or album release details."
+    "name": "Music Attribution and History",
+    "description": "Seeks facts about song origins, artist identification, composition dates, band histories, and musical theory elements."
   },
   {
-    "name": "Sports, Athletics and Competitive Records",
-    "description": "Seeks facts about athletic achievements, championship results, player awards, and competitive sports outcomes."
+    "name": "Sports Records and Championships",
+    "description": "Seeks facts about athletic team careers, championship outcomes, sports rivalries, player achievements, and specific match results."
   },
   {
-    "name": "Law, Government and Civic Processes",
-    "description": "Seeks facts about presidential authority, congressional procedures, legislative jurisdiction, and legal rights."
+    "name": "Historical Events and Conflicts",
+    "description": "Seeks facts about historical battles, wars, political structures, government functions, and specific historical events."
   },
   {
-    "name": "Literature, Books and Publishing",
-    "description": "Seeks facts about book navigation elements, structural terminology, and publication history of written works."
+    "name": "Geographic Locations and Statistics",
+    "description": "Seeks facts about physical locations, geographic settings, population data, urban statistics, and regional demographic trends."
   },
   {
-    "name": "Earth Sciences, Ecology and Geography",
-    "description": "Seeks facts about planetary composition, aquatic food webs, atmospheric dynamics, and environmental processes."
+    "name": "Literature and Publication Details",
+    "description": "Seeks facts about book structures, terminology, publication dates, fictional narrative timelines, and publishing information."
   },
   {
-    "name": "History, Conflicts and Cultural Institutions",
-    "description": "Seeks facts about military campaigns, battle outcomes, historical dates, and major geopolitical events."
+    "name": "Legal and Monetary Systems",
+    "description": "Seeks facts about national currency denominations, coinage circulation, historical monetary changes, and specific legal statutes."
   },
   {
-    "name": "Demographics, Populations and Urban Facts",
-    "description": "Seeks facts about city election results, urban population statistics, currency denominations, and licensing administration."
+    "name": "Biological Mechanisms and Physiology",
+    "description": "Seeks facts about biological mechanisms, cellular processes, inheritance principles, anatomical functions, and ecological cycles."
   },
   {
-    "name": "Science, Engineering and Technology",
-    "description": "Seeks facts about physics, chemistry, engineering systems, consumer electronics, software, and network infrastructure."
+    "name": "Technical and Infrastructure Systems",
+    "description": "Seeks facts about network protocols, construction timelines of structures, licensing processes, and technical system architectures."
   }
 ]
