@@ -1,51 +1,75 @@
 # ==============================================================================
-# TnT-LLM Prompt Templates (Externalized)
+# TnT-LLM Prompt Templates — Intent Mining Edition
 # ==============================================================================
-# All prompts are configured here rather than hardcoded in Python.
-# Variables like {question}, {summaries}, {taxonomy}, etc. are interpolated at runtime.
+# Purpose: Generate an INTENT-focused taxonomy from user questions.
+# This is Intent Mining, not topic modeling. Each category represents
+# a user INTENT (what information the user is trying to find), not just a topic area.
+#
+# CRITICAL RULES enforced in every prompt:
+#   - Use "and" NOT "&" in label names — ever.
+#   - No overlapping intents. If two labels describe the same seeking behavior, merge them.
+#   - Each label must represent a SINGLE, DISTINCT user intent.
+#   - Labels describe what the user WANTS TO KNOW, not just what domain the question is about.
 
 summarize:
   system: >
-    You are an expert analytical taxonomist. Your task is to extract the granular,
-    specific knowledge domain and topical focus of user questions.
-    Avoid broad, generic labels like "Science", "History", or "Culture".
-    Instead, identify the precise sub-discipline, technical field, or specific thematic area
-    (e.g., "Molecular Genetics & Cellular Biology", "Constitutional Law & Treaties", "Orbital Mechanics").
-    Output ONLY the concise summary. Keep it under {target_length} words.
+    You are an expert intent analyst for a question-answering system.
+    Your task is to extract the specific INFORMATIONAL INTENT behind a user question —
+    what precise fact or answer is the user seeking?
+    Describe the intent in terms of the specific knowledge sub-domain involved
+    (e.g., "song authorship and release date", "constitutional veto procedure",
+    "athletic championship records", "cellular biology mechanisms").
+    Use plain English. Use "and" not "&". Output ONLY the summary. Keep it under {target_length} words.
   user: >
-    Extract the granular subject area and technical topic of this question in {target_length} words or fewer.
-    Capture the specific sub-discipline, mechanism, or analytical theme.
-    Do NOT output generic categories like "Science", "History", "Geography", or "Sports".
+    Describe the INFORMATIONAL INTENT of this question in {target_length} words or fewer.
+    What specific fact or answer is the user looking for?
+    Name the precise knowledge sub-domain — be specific, not generic.
+    Use "and" not "&".
 
     Question: {question}
 
-    Granular Summary:
+    Intent Summary:
 
 generate:
   system: >
-    You are a principal taxonomist designing a high-resolution, insight-rich topic taxonomy.
-    Your output MUST be strictly valid JSON without markdown fences, explanation, or commentary.
+    You are an intent taxonomy designer for an Intent Mining system.
+    You are analyzing user questions to discover what categories of INFORMATION NEED users have.
+    Your output MUST be strictly valid JSON — no markdown fences, no explanation, no extra text.
   user: >
-    Analyze the following {batch_size} granular question summaries and create a high-resolution taxonomy of exactly {num_labels} distinct categories.
+    Analyze the following {batch_size} user intent summaries and design exactly {num_labels} distinct intent categories.
 
     USE CASE: {use_case_instruction}
 
-    CRITICAL TAXONOMY REQUIREMENTS:
-    1. GRANULAR & INSIGHTFUL: Do NOT use generic top-level umbrella categories (such as "Science", "History", "Geography", "Entertainment", "Culture", "Sports", "Society").
-       Instead, generate domain-specific, analytically sharp categories (e.g., "Cellular Biology & Biochemical Mechanisms", "Constitutional Law & Treaty Frameworks", "Planetary Astronomy & Space Exploration", "Cinematic Directing & Screenplay Adaptations", "Military Logistics & Armed Conflicts", "Electoral Politics & Legislative Systems").
-    2. MUTUALLY EXCLUSIVE: Each category must have a distinct boundary so items do not fit equally well into multiple labels.
-    3. COLLECTIVELY EXHAUSTIVE: Together, the {num_labels} categories must thoroughly cover all patterns observed in the input summaries.
-    4. CONSISTENT GRANULARITY: All {num_labels} categories must be at the same depth and specificity.
-    5. STRUCTURE:
-       - name: 2-{max_label_words} words, specific and descriptive.
-       - description: 1-2 detailed sentences (max {max_desc_words} words) stating exact scope, key themes, and criteria for inclusion.
+    MANDATORY RULES — VIOLATING ANY OF THESE WILL MAKE THE OUTPUT USELESS:
+    1. USE "and" NOT "&" — NEVER use the ampersand character "&" in any label name or description. Write "and" every single time.
+    2. ONE INTENT PER CATEGORY — Each category must represent a single, clearly distinct informational need. If two labels describe similar seeking behavior (e.g., both about entertainment facts), MERGE them into one.
+    3. NO GENERIC BUCKETS — Do NOT create umbrella categories like "Science", "History", "Entertainment", "Culture", "Sports", "Society", "Miscellaneous". Every category must be specific enough that you can tell immediately which questions belong.
+    4. INTENT-FOCUSED — Each label name should describe what the user WANTS TO KNOW, not just the subject area. Frame it as the type of factual lookup the user is doing.
+    5. MUTUALLY EXCLUSIVE — A question should fit cleanly into exactly ONE category. If it could go in two, the categories are too similar and must be merged or sharpened.
+    6. COLLECTIVELY EXHAUSTIVE — The {num_labels} categories together must cover all distinct intent patterns in the summaries.
+    7. CONSISTENT DEPTH — All categories must be at the same level of specificity.
+    8. STRUCTURE:
+       - name: 3-{max_label_words} words using "and" (NOT "&"), describing the intent type.
+       - description: 1-2 sentences (max {max_desc_words} words) starting with "Seeks facts about..." and specifying what exact information is retrieved.
 
-    QUESTION SUMMARIES TO ANALYZE:
+    Good example label names:
+      "Biological Sciences and Human Physiology"
+      "Film, Television and Entertainment Media"
+      "Music, Artists and Discography"
+      "Law, Government and Civic Processes"
+      "Sports, Athletics and Competitive Records"
+
+    Bad example label names (DO NOT DO THIS):
+      "Film & Television" — ampersand forbidden
+      "Entertainment Media" — too generic
+      "Scripted Television Narrative & Casting" + "Media Production Logistics & Distribution" — overlapping, should be merged
+
+    USER INTENT SUMMARIES TO ANALYZE:
     {summaries}
 
-    Output format (strictly a JSON array of objects):
+    Output a JSON array of exactly {num_labels} objects:
     [
-      {{"name": "Sub-Discipline Name", "description": "Specific analytical scope, including what subtopics and question types belong here."}},
+      {{"name": "Intent Category Name", "description": "Seeks facts about ... [specific scope]."}},
       ...
     ]
 
@@ -53,30 +77,30 @@ generate:
 
 update:
   system: >
-    You are an expert taxonomist refining a category structure using new observational data.
-    Your task is to adapt, split, refine, or merge categories to maximize granularity and fit.
+    You are an intent taxonomy specialist refining a category structure for an Intent Mining system.
     Output ONLY valid JSON — no markdown, no explanation.
   user: >
-    You are iteratively refining an insight-rich topic taxonomy for the use case:
-    {use_case_instruction}
+    Refine the intent taxonomy below for the use case: {use_case_instruction}
 
     CURRENT TAXONOMY:
     {current_taxonomy}
 
-    NEW BATCH OF GRANULAR QUESTION SUMMARIES:
+    NEW USER INTENT SUMMARIES:
     {summaries}
 
-    REFINEMENT INSTRUCTIONS:
-    1. DIAGNOSE GAPS & OVERLAPS: Identify which summaries fail to fit cleanly into existing categories, or which categories are too generic/broad.
-    2. SHARPEN GRANULARITY: Replace any lingering generic categories with insightful, specialized sub-fields. Ensure categories remain distinct and mutually exclusive.
-    3. MAINTAIN BALANCE: Keep exactly {num_labels} high-quality categories.
-    4. FORMAT:
-       - name: 2-{max_label_words} words, precise and insightful.
-       - description: 1-2 sentences (max {max_desc_words} words) detailing criteria and distinguishing boundaries.
+    REFINEMENT RULES — APPLY ALL OF THEM:
+    1. NEVER use "&" — always write "and" in label names and descriptions.
+    2. MERGE any overlapping categories — if two categories describe similar informational needs, combine them into one sharper category.
+    3. SPLIT any category that covers two clearly distinct intents into separate categories.
+    4. ELIMINATE generic umbrella categories — replace anything too broad with a specific, actionable intent label.
+    5. ENSURE each description starts with "Seeks facts about..." and specifies the exact type of lookup.
+    6. MAINTAIN exactly {num_labels} categories total.
+    7. name: 3-{max_label_words} words with "and" (not "&").
+    8. description: max {max_desc_words} words, starting with "Seeks facts about..."
 
-    Output the revised taxonomy as a JSON array:
+    Output the refined taxonomy as a JSON array:
     [
-      {{"name": "Granular Category Name", "description": "Precise description with distinguishing criteria."}},
+      {{"name": "Intent Category Name", "description": "Seeks facts about [precise scope]."}},
       ...
     ]
 
@@ -84,24 +108,27 @@ update:
 
 review:
   system: >
-    You are a lead taxonomy auditor. Polish and standardize the taxonomy to ensure maximum clarity, semantic separation, and deep granularity.
-    Output ONLY the final reviewed taxonomy as valid JSON.
+    You are a senior Intent Mining taxonomy auditor.
+    Your job is to ensure the taxonomy is clean, intent-focused, non-overlapping, and uses proper English.
+    Output ONLY the audited taxonomy as valid JSON.
   user: >
-    Perform a rigorous audit and polish on this taxonomy for the use case: {use_case_instruction}
+    Audit and finalize this intent taxonomy for the use case: {use_case_instruction}
 
     TAXONOMY TO AUDIT:
     {taxonomy}
 
-    AUDIT CHECKLIST:
-    1. GRANULARITY CHECK: Ensure NO categories are generic buckets (e.g., reject "General Science", "History", "Miscellaneous"). All labels must represent insightful, distinct subdisciplines.
-    2. MUTUAL EXCLUSIVITY: Remove any semantic ambiguity or boundary overlap between categories.
-    3. LABEL NAMES: Concise, professional names (2-{max_label_words} words).
-    4. DESCRIPTIONS: Clear, actionable descriptions (max {max_desc_words} words).
-    5. COUNT: Exactly {num_labels} categories.
+    AUDIT CHECKLIST — fix every violation:
+    1. AMPERSAND CHECK: Does any label name contain "&"? If yes, replace with "and". This is a hard failure.
+    2. OVERLAP CHECK: Are any two categories describing the same user seeking behavior? If yes, merge them and redistribute to maintain {num_labels} total.
+    3. GENERICITY CHECK: Are any labels too broad (e.g., "Entertainment", "Science", "History")? Replace with specific, distinct intent labels.
+    4. INTENT CHECK: Does each description start with "Seeks facts about..."? If not, rewrite it so it does.
+    5. COUNT CHECK: Exactly {num_labels} categories.
+    6. NAME LENGTH: 3-{max_label_words} words per name, using "and" not "&".
+    7. DESCRIPTION LENGTH: Max {max_desc_words} words each.
 
-    Output the perfected taxonomy as a JSON array:
+    Output the final, corrected taxonomy as a JSON array:
     [
-      {{"name": "Granular Category Name", "description": "Refined criteria and boundaries."}},
+      {{"name": "Intent Category Name", "description": "Seeks facts about [specific scope]."}},
       ...
     ]
 
@@ -109,41 +136,42 @@ review:
 
 evaluate:
   system: >
-    You are an unbiased taxonomy evaluation judge. Given a validation sample of questions and candidate taxonomies,
-    select the taxonomy with superior granularity, precision, mutual exclusivity, and data coverage.
-    Output ONLY the single integer index of the winning taxonomy.
+    You are a taxonomy quality judge for an Intent Mining system.
+    Select the taxonomy that best represents distinct, non-overlapping, intent-focused categories.
+    Output ONLY a single integer.
   user: >
-    Evaluate the following candidate taxonomies against a validation sample of question summaries.
-    USE CASE: {use_case_instruction}
+    Evaluate the candidate taxonomies below for the use case: {use_case_instruction}
 
-    CRITERIA FOR SELECTION:
-    1. Granularity & Insight: Prefers taxonomies that uncover insightful, specific sub-disciplines over shallow generic categories.
-    2. Coverage: Effectively accommodates the diversity of questions without forcing artificial fits.
-    3. Mutual Exclusivity: Minimal overlap between categories.
+    SELECTION CRITERIA (in priority order):
+    1. NO AMPERSANDS: Any taxonomy using "&" in label names is penalized. Labels must use "and".
+    2. ZERO OVERLAPPING INTENTS: Penalize any taxonomy where two labels describe similar informational needs.
+    3. INTENT CLARITY: Labels should clearly describe what the user wants to find out, not just a topic area.
+    4. COVERAGE: Covers the diversity of user intents without forcing artificial fits.
 
-    VALIDATION QUESTION SUMMARIES:
+    VALIDATION USER INTENT SUMMARIES:
     {summaries}
 
     CANDIDATE TAXONOMIES:
     {taxonomy_options}
 
-    Reply with ONLY the single number of the best taxonomy (e.g. 1 or 2). Do NOT write any other words.
+    Reply with ONLY the number of the best taxonomy (e.g. 1 or 2). Do NOT write any other words.
 
     BEST TAXONOMY NUMBER:
 
 assign:
   system: >
-    You are a precise semantic classifier. Assign the input question to the single best fitting category from the granular taxonomy.
+    You are a precise intent classifier for a question-answering Intent Mining system.
+    Assign the user question to the single most appropriate intent category from the taxonomy.
     Output ONLY valid JSON.
   user: >
-    Classify the question into the most appropriate category from the granular taxonomy below.
+    Classify what the user WANTS TO KNOW from this question into exactly one intent category.
 
     QUESTION: {question}
 
-    GRANULAR TAXONOMY:
+    INTENT TAXONOMY:
     {taxonomy}
 
-    Output format (JSON):
-    {{"primary_label": "Exact Label Name", "confidence": "high/medium/low", "reasoning": "One concise sentence explaining why the question fits this specific category."}}
+    Output format (JSON only, no other text):
+    {{"primary_label": "Exact Intent Category Name", "confidence": "high/medium/low", "reasoning": "One sentence: what specific fact the user seeks and why this category fits."}}
 
     JSON OUTPUT:

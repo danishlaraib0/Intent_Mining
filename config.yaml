@@ -72,24 +72,25 @@ phase1:
   # Stage 2: Taxonomy Generation (SGD-style)
   taxonomy:
     num_labels: 10                   # Target number of taxonomy labels
-    max_label_words: 5               # Max words per label name
+    max_label_words: 6               # Enough for intent-style names like "Film, Television and Entertainment Media"
     max_desc_words: 40               # Max words per label description
     minibatch_size: 40               # Summaries per taxonomy update batch
     num_trials: 2                    # 2 trials with validation model selection
     num_epochs: 1                    # Epochs over data per trial
     output_dir: "taxonomies"
 
-  # Use-case instruction (Enforces Granular, Insightful, Non-Generic Taxonomy)
+  # Use-case instruction — Intent Mining focused, NO AMPERSANDS
   use_case:
-    name: "granular_knowledge_domain"
+    name: "intent_mining"
     instruction: >
-      Discover a granular, high-resolution taxonomy of specific knowledge domains and subdisciplines
-      represented in user factual queries.
-      Do NOT produce generic top-level umbrella categories (such as "Science", "History", "Sports", "Geography", "Entertainment", "Culture").
-      Instead, uncover insightful, domain-specific subdisciplines (e.g., "Cellular Biology & Molecular Genetics",
-      "Constitutional Law & Treaties", "Orbital Mechanics & Planetary Astronomy", "Cinematic Screenwriting & Directing",
-      "Military Operations & Armed Conflicts", "Electoral Systems & Legislative Politics", "Classical Literature & Literary Devices").
-      Categories must be mutually exclusive, collectively exhaustive, and provide deep analytical insight.
+      This is an INTENT MINING task. Discover what distinct categories of INFORMATIONAL INTENT users express
+      when asking factual questions. Each category must represent a unique type of informational need —
+      what the user wants to find out — not just a broad subject area.
+      RULES: Use "and" not "&" in every label. Merge any overlapping intents into one.
+      Do NOT create generic umbrella categories like "Science", "History", "Sports", "Entertainment", "Culture".
+      Good examples: "Biological Sciences and Human Physiology", "Film, Television and Entertainment Media",
+      "Music, Artists and Discography", "Law, Government and Civic Processes".
+      Each category must be distinct enough that a question clearly belongs to only one.
 
 # --- Phase 2: Label Assignment (No Classifier Training) ---
 phase2:
