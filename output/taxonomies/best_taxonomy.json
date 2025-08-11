@@ -1,42 +1,42 @@
 [
   {
-    "name": "Television & Streaming",
-    "description": "Facts about TV series, streaming platforms, casting, production details, and release schedules."
+    "name": "Cellular Physiology & Clinical Nomenclature",
+    "description": "Covers intracellular mechanisms, genetic expression, and standardized medical terminology or diagnostic codes."
   },
   {
-    "name": "Film & Video Games",
-    "description": "Information on movies, cinema history, video game lore, characters, mechanics, and releases."
+    "name": "Scripted Television Narrative & Casting",
+    "description": "Focuses on actor-character mappings, plot developments, and character relationships across scripted series."
   },
   {
-    "name": "Music & Pop Culture",
-    "description": "Music history, artist credits, celebrity news, trends, and general entertainment trivia."
+    "name": "Media Production Logistics & Distribution",
+    "description": "Addresses release timelines, filming locations, production leadership, and operational media distribution mechanics."
   },
   {
-    "name": "Sports & Athletics",
-    "description": "Professional and amateur sports, including team histories, player statistics, rules, and match results."
+    "name": "Musical Attribution & Release Chronology",
+    "description": "Identifies songwriters, performing artists, and specific release dates or catalog details for musical tracks."
   },
   {
-    "name": "History & Military",
-    "description": "Historical events, wars, battles, political movements, and significant figures from past centuries."
+    "name": "Sports Statistics & Competitive Histories",
+    "description": "Details championship outcomes, player awards, specific match events, and historical performance statistics."
   },
   {
-    "name": "Law & Government",
-    "description": "Legal statutes, government structures, legislative processes, political administration, and civic services."
+    "name": "Constitutional Law & Legislative Procedure",
+    "description": "Examines statutory scopes, executive powers, and procedural rules governing legislative bodies and legal rights."
   },
   {
-    "name": "Natural Sciences",
-    "description": "Biology, chemistry, physics, astronomy, ecology, meteorology, and natural phenomena."
+    "name": "Literary Publishing & Textual Structure",
+    "description": "Pertains to book series chronologies, publishing history, and physical or structural organization of written works."
   },
   {
-    "name": "Geography & Demographics",
-    "description": "Physical geography, land areas, population statistics, urban data, and locations of regions or countries."
+    "name": "Ecological Dynamics & Atmospheric Systems",
+    "description": "Covers nutrient cycling, food webs, and meteorological phenomena like pressure systems and circulation patterns."
   },
   {
-    "name": "Economics & Technology",
-    "description": "Currency, financial systems, economic history, consumer electronics, software, and network protocols."
+    "name": "Geospatial Data & Land Use",
+    "description": "Includes national geographic locations, forest cover data, and specific physical landmarks or administrative boundaries."
   },
   {
-    "name": "Literature & Health",
-    "description": "Books, publishing, literary analysis, medical terminology, pharmacology, and human health topics."
+    "name": "Historical Infrastructure & Religious Schisms",
+    "description": "Addresses major engineering projects like railroads and significant theological or political divisions in religious institutions."
   }
 ]

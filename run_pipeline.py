@@ -51,6 +51,11 @@ def parse_args() -> argparse.Namespace:
         action="store_true",
         help="Skip Phase 2 label assignment",
     )
+    parser.add_argument(
+        "--fresh-taxonomy",
+        action="store_true",
+        help="Regenerate taxonomy trials from scratch (ignore cached trial_*.json)",
+    )
     return parser.parse_args()
 
 
@@ -113,7 +118,11 @@ def main() -> None:
             logger=logger,
             output_dir=output_dir,
         )
-        best_taxonomy = p1.run(train_records, val_records)
+        best_taxonomy = p1.run(
+            train_records,
+            val_records,
+            fresh_taxonomy=args.fresh_taxonomy,
+        )
 
         # 7. Execute Phase 2: Label Assignment
         if not args.skip_labeling:

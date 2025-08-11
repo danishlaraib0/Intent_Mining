@@ -1,42 +1,42 @@
 [
   {
-    "name": "Film and Cinema",
-    "description": "Movies, casting, production details, franchises, adaptations, and specific plot or character details from films."
+    "name": "Hematology & Cellular Physiology",
+    "description": "Blood cell formation, muscle contraction mechanisms, and nucleic acid function at the cellular level."
   },
   {
-    "name": "Television and Streaming",
-    "description": "TV series, streaming content, casting, production schedules, filming locations, and show-specific plot details."
+    "name": "Television Production & Narrative",
+    "description": "Actor casting, character arcs, plot specifics, and release schedules for scripted TV series."
   },
   {
-    "name": "Music and Audio",
-    "description": "Songs, artists, bands, music theory, release dates, songwriting credits, and audio production details."
+    "name": "Musicology & Release Chronology",
+    "description": "Song composition dates, artist attribution, band histories, and specific track release timelines."
   },
   {
-    "name": "History and Politics",
-    "description": "Historical events, wars, political movements, government structure, legislation, and significant past occurrences."
+    "name": "Military Campaigns & Combat",
+    "description": "Specific battle dates, combatant identities, tactical operations, and armed conflict outcomes."
   },
   {
-    "name": "Science and Medicine",
-    "description": "Biology, medicine, physics, chemistry, ecology, psychology, and other natural or applied scientific concepts."
+    "name": "Athletic Records & Championships",
+    "description": "Specific athletic achievements, championship results, player awards, and competitive sports statistics."
   },
   {
-    "name": "Geography and Demographics",
-    "description": "Locations, physical geography, population statistics, urban planning, and fictional settings from media."
+    "name": "Constitutional Law & Veto Powers",
+    "description": "Presidential veto authority, congressional override procedures, and legislative jurisdiction scopes."
   },
   {
-    "name": "Sports and Athletics",
-    "description": "Sports rules, player achievements, team histories, rivalries, championships, and specific athletic events."
+    "name": "Book Structure & Publishing",
+    "description": "Physical book navigation elements, structural terminology, and publication history details."
   },
   {
-    "name": "Literature and Books",
-    "description": "Books, publishing details, narrative elements, book series, and literary terminology."
+    "name": "Numismatics & Licensing Administration",
+    "description": "Currency denominations, historical coinage details, and administrative processes for official licenses."
   },
   {
-    "name": "Technology and Gaming",
-    "description": "Software, hardware, network protocols, consumer electronics, video games, and technical infrastructure."
+    "name": "Urban Demographics & Elections",
+    "description": "Local election results, urban population statistics, and public venue construction timelines."
   },
   {
-    "name": "Society and Culture",
-    "description": "Religion, currency, law, celebrity gossip, general cultural knowledge, and everyday civic processes."
+    "name": "Moral Development & Ecology",
+    "description": "Moral reasoning frameworks, planetary composition, aquatic food webs, and atmospheric dynamics."
   }
 ]

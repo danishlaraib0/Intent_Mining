@@ -4,17 +4,16 @@
 
 project:
   name: "nq-taxonomy-generation"
-  root_dir: "/home/immortal/Desktop/Taxonomy_generation"
-  data_dir: "/home/immortal/Desktop/Taxonomy_generation/dataset"
-  output_dir: "/home/immortal/Desktop/Taxonomy_generation/output"
-  python: "/home/immortal/Desktop/Taxonomy_generation/taxonomy/bin/python"
+  root_dir: "."
+  data_dir: "dataset"
+  output_dir: "output"
 
 # --- Corpus ---
 corpus:
-  path: "/home/immortal/Desktop/Taxonomy_generation/dataset/NQ-open.efficientqa.dev.1.1.no-annotations.jsonl"
+  path: "dataset/NQ-open.efficientqa.dev.1.1.no-annotations.jsonl"
   text_field: "question"            # JSON key holding the text
   total_records: 1800
-  sample_size: 100                  # Quick run: 100 questions
+  sample_size: 100                  # Quick run: 100 questions (set null for full dataset)
   val_ratio: 0.2                    # 20% held out for validation-based taxonomy selection
   random_seed: 42
 
@@ -61,7 +60,7 @@ prompts:
   path: "config/prompts.yaml"
 
 logging:
-  dir: "output/logs"
+  dir: "logs"
 
 # --- Phase 1: Taxonomy Generation ---
 phase1:

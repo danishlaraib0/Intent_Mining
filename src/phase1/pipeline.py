@@ -41,6 +41,7 @@ class Phase1Pipeline:
         self,
         train_records: List[Dict[str, Any]],
         val_records: List[Dict[str, Any]],
+        fresh_taxonomy: bool = False,
     ) -> List[Dict[str, str]]:
         """Execute Phase 1 end-to-end."""
         tax_dir = self.output_dir / self.cfg["phase1"]["taxonomy"].get("output_dir", "taxonomies")
@@ -79,7 +80,7 @@ class Phase1Pipeline:
 
             # Check if trial already exists on disk
             trial_path = tax_dir / f"trial_{trial}.json"
-            if trial_path.exists():
+            if not fresh_taxonomy and trial_path.exists():
                 print(f"  📂 Loaded existing Trial {trial} from {trial_path}")
                 with open(trial_path, "r", encoding="utf-8") as f:
                     candidate_taxonomies.append(json.load(f))
